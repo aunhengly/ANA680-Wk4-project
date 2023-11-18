@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Traffic Situation</title>
+    <style>
+      /* CSS for organizing the layout and styling the submit button */
+      .container {
+        display: flex;
+        justify-content: space-between;
+      }
+      .column {
+        flex: 1;
+        padding: 10px;
+      }
+      .input-label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-field {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      .submit-button {
+        background-color: lightblue;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Traffic Prediction:</h1>
+    <div class="container">
+      <div class="column">
+        <h2>Entries</h2>
+        <form action="{{ url_for('predict')}}" method="POST">
+          <label for="Day_of_the_week"> Day_of_the_week (Range: 1 - 7):</label>
+          <input
+            type="number"
+            name="Day_of_the_week"
+            id="Day_of_the_week"
+            min="1"
+            max="7"
+            step="1"
+            required
+          />
+          <br />
+
+          <label for="CarCount">CarCount (Range: 6 - 180):</label>
+          <input
+            type="number"
+            name="CarCount"
+            id="CarCount"
+            min="6"
+            max="180"
+            step="10"
+            required
+          />
+          <br />
+
+          <label for="BikeCount">BikeCount (Range: 0 - 70):</label>
+          <input
+            type="number"
+            name="BikeCount"
+            id="BikeCount"
+            min="0"
+            max="70"
+            step="10"
+            required
+          />
+          <br />
+
+          <label for="BusCount">BusCount (Range: 0 - 50):</label>
+          <input
+            type="number"
+            name="BusCount"
+            id="BusCount"
+            min="0"
+            max="50"
+            step="10"
+            required
+          />
+          <br />
+
+          <label for="TruckCount">TruckCount (Range: 0 - 40):</label>
+          <input
+            type="number"
+            name="TruckCount"
+            id="TruckCount"
+            min="0"
+            max="40"
+            step="10"
+            required
+          />
+          <br />
+
+          <label for="hour">Hour-Military Time: (Range: 0 - 23):</label>
+          <input
+            type="number"
+            name="hour"
+            id="hour"
+            min="0"
+            max="23"
+            step="1"
+            required
+          />
+          <br />
+
+          <label for="minute">Minute (Range: 0 - 45):</label>
+          <input
+            type="number"
+            name="minute"
+            id="minute"
+            min="0"
+            max="45"
+            step="15"
+            required
+          />
+          <br />
+
+          <button type="submit" class="submit-button">Submit</button>
+          <button type="button" id="clearButton">Clear</button>
+        </form>
+        <h3>Days:</h3>
+        <label>1 = Monday </label><br />
+        <label>2 = Tuesday </label><br />
+        <label>3 = Wednesday </label><br />
+        <label>0 = Thursday </label><br />
+        <label>1 = Friday </label><br />
+        <label>2 = Saturday </label><br />
+        <label>3 = Sunday </label><br />
+
+        <h3>Result from Prediction for the Traffic:</h3>
+        <br />
+        <label>0 = Low Traffic </label><br />
+        <label>1 = Normal Traffic </label><br />
+        <label>2 = Heavy Traffic </label><br />
+        <label>3 = High Traffic </label><br />
+      </div>
+
+      <div class="column">
+        <h2>Records of Predictions</h2>
+        <div id="resultContainer">
+          <ul id="predictionsList">
+            {% for entry in predictions %}
+            <li>{{ entry }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <script>
+      document
+        .getElementById("clearButton")
+        .addEventListener("click", function () {
+          document.querySelector("form").reset();
+          document.querySelector("#resultContainer").style.display = "none";
+          document.getElementById("predict").innerHTML = "";
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+#!/Users/henglyaun/0-National_university/11-ANA7680_ML_Dev/11-ANA680-HWs/ANA680-Wk4-project/venv/bin/python
+# -*- coding: utf-8 -*-
+import re
+import sys
+from flask.cli import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
